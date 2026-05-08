@@ -3,33 +3,48 @@
 /* Tailwind v4 클래스 기반 다크모드 */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Light Mode (따뜻한 크림 캔버스 — Mastercard 레퍼런스) ─── */
 :root {
-  --bg-page:   #f4f5f7;
-  --bg-card:   #ffffff;
-  --bg-input:  #ffffff;
-  --bd-input:  #e2e8f0;
-  --tx-primary:#111827;
-  --tx-secondary:#6b7280;
+  --bg-page:     #FAF7F0;
+  --bg-card:     #FFFFFF;
+  --bg-input:    #FFFFFF;
+  --bd-input:    #E8DDD0;
+  --tx-primary:  #1A1208;
+  --tx-secondary:#6B5F4A;
+
+  /* 골드 액센트 (프리미엄 금 거래 — Binance Yellow 저채도 버전) */
+  --accent:      #C9920C;
+  --accent-hover:#A87B0A;
+  --accent-fg:   #FFFFFF;
+  --accent-soft: #FDF3DB;
 }
 
+/* ─── Dark Mode (Binance Canvas — 딥 네이비 블랙) ─── */
 .dark {
-  --bg-page:   #18202e;
-  --bg-card:   #242d3d;
-  --bg-input:  #2d3748;
-  --bd-input:  #3d4d63;
-  --tx-primary:#f1f5f9;
-  --tx-secondary:#94a3b8;
+  --bg-page:     #0B0E11;
+  --bg-card:     #1E2329;
+  --bg-input:    #2B3139;
+  --bd-input:    #363C47;
+  --tx-primary:  #EAECEF;
+  --tx-secondary:#848E9C;
+
+  --accent:      #D4A017;
+  --accent-hover:#E5B420;
+  --accent-fg:   #1A1208;
+  --accent-soft: #2A2410;
 }
 
+/* ─── Base ─── */
 html, body {
   background-color: var(--bg-page);
   color: var(--tx-primary);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', sans-serif;
   transition: background-color 0.2s, color 0.2s;
   min-height: 100%;
 }
 
-/* 입력 요소 기본 다크모드 */
+/* ─── Form Elements ─── */
 input, textarea, select {
   background-color: var(--bg-input);
   color: var(--tx-primary);
@@ -38,4 +53,36 @@ input, textarea, select {
 
 input::placeholder, textarea::placeholder {
   color: var(--tx-secondary);
+}
+
+/* ─── 공통 버튼 ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: var(--accent-fg);
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.15s;
+  cursor: pointer;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Trust Badge ─── */
+.badge-trust {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 500;
 }

@@ -224,7 +224,8 @@ export default function NewProductPage() {
         <button
           type="submit"
           disabled={loading || !title}
-          className="w-full py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 disabled:opacity-50 transition-colors text-sm"
+          className="w-full py-3 rounded-xl font-semibold disabled:opacity-50 transition-colors text-sm"
+          style={{ backgroundColor: "var(--accent)", color: "var(--accent-fg)" }}
         >
           {loading ? "등록 중..." : "완료"}
         </button>

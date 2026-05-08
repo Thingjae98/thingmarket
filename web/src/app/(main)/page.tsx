@@ -71,7 +71,8 @@ export default function HomePage() {
         />
         <button
           onClick={fetchSearch}
-          className="px-5 py-2.5 bg-orange-500 text-white rounded-full text-sm font-medium hover:bg-orange-600 transition-colors"
+          className="px-5 py-2.5 rounded-full text-sm font-medium transition-colors hover:opacity-80"
+          style={{ backgroundColor: "var(--accent)", color: "var(--accent-fg)" }}
         >
           검색
         </button>
@@ -91,12 +92,11 @@ export default function HomePage() {
           <button
             key={r}
             onClick={() => setRadius(r)}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-              radius === r
-                ? "bg-orange-500 text-white"
-                : "hover:text-orange-500"
-            }`}
-            style={radius !== r ? { color: "var(--tx-secondary)" } : {}}
+            className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
+            style={radius === r
+              ? { backgroundColor: "var(--accent)", color: "var(--accent-fg)" }
+              : { color: "var(--tx-secondary)" }
+            }
           >
             {r}km
           </button>

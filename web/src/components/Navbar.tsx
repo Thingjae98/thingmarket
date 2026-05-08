@@ -25,27 +25,27 @@ export default function Navbar() {
       style={{ backgroundColor: "var(--bg-card)", borderBottom: "1px solid var(--bd-input)" }}
     >
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold text-orange-500">
+        <Link href="/" className="text-xl font-bold" style={{ color: "var(--accent)" }}>
           띵마켓
         </Link>
         <nav className="flex items-center gap-3 text-sm">
           {user ? (
             <>
-              <Link href="/products/new" className="hover:text-orange-500 transition-colors" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/products/new" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 판매하기
               </Link>
-              <Link href="/chat" className="hover:text-orange-500 transition-colors" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/chat" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 채팅
               </Link>
-              <Link href="/likes" className="hover:text-orange-500 transition-colors" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/likes" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 관심목록
               </Link>
-              <Link href="/profile" className="hover:text-orange-500 transition-colors" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/profile" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 내 프로필
               </Link>
               <button
                 onClick={handleLogout}
-                className="hover:text-orange-400 transition-colors text-xs"
+                className="transition-colors hover:opacity-50 text-xs"
                 style={{ color: "var(--tx-secondary)" }}
               >
                 로그아웃
@@ -55,13 +55,15 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="px-3 py-1.5 rounded-full border border-orange-400 text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950/30 transition-colors"
+                className="px-3 py-1.5 rounded-full text-sm transition-colors hover:opacity-80"
+                style={{ border: "1px solid var(--accent)", color: "var(--accent)" }}
               >
                 로그인
               </Link>
               <Link
                 href="/register"
-                className="px-3 py-1.5 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition-colors"
+                className="px-3 py-1.5 rounded-full text-sm transition-colors hover:opacity-80"
+                style={{ backgroundColor: "var(--accent)", color: "var(--accent-fg)" }}
               >
                 회원가입
               </Link>
@@ -72,7 +74,8 @@ export default function Navbar() {
           <button
             onClick={toggle}
             title={theme === "dark" ? "라이트 모드" : "다크 모드"}
-            className="w-8 h-8 flex items-center justify-center rounded-full transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+            className="w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+            style={{ backgroundColor: "var(--accent-soft)" }}
           >
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
