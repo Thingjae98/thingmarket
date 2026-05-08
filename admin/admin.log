@@ -1,0 +1,35 @@
+
+> admin@0.1.0 dev
+> next dev --port 3001
+
+▲ Next.js 16.2.5 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://172.18.144.1:3001
+- Environments: .env.local
+✓ Ready in 759ms
+
+ GET / 307 in 2.2s (next.js: 1994ms, application-code: 177ms)
+ GET /dashboard 200 in 724ms (next.js: 616ms, application-code: 109ms)
+ GET /login 200 in 367ms (next.js: 344ms, application-code: 23ms)
+ GET / 307 in 148ms (next.js: 34ms, application-code: 113ms)
+ GET /dashboard 200 in 47ms (next.js: 6ms, application-code: 40ms)
+ GET /login 200 in 27ms (next.js: 5ms, application-code: 22ms)
+ GET / 307 in 147ms (next.js: 6ms, application-code: 141ms)
+ GET /dashboard 200 in 64ms (next.js: 8ms, application-code: 56ms)
+ GET /login 200 in 23ms (next.js: 5ms, application-code: 18ms)
+ GET /dashboard 200 in 28ms (next.js: 5ms, application-code: 23ms)
+ GET /dashboard 200 in 39ms (next.js: 5ms, application-code: 34ms)
+ GET /products 200 in 802ms (next.js: 776ms, application-code: 27ms)
+ GET /chats 200 in 379ms (next.js: 358ms, application-code: 21ms)
+[browser] ⨯ unhandledRejection: TypeError: Failed to fetch
+    at adminFetch (file://C:/Users/mj985/Desktop/2025프로젝트/carrot/admin/.next/dev/static/chunks/src_0-sxccz._.js:12:23)
+    at AdminChatsPage.useEffect (file://C:/Users/mj985/Desktop/2025프로젝트/carrot/admin/.next/dev/static/chunks/src_08krhwc._.js:94:156)
+[browser] ⨯ unhandledRejection: TypeError: Failed to fetch
+    at adminFetch (file://C:/Users/mj985/Desktop/2025프로젝트/carrot/admin/.next/dev/static/chunks/src_0-sxccz._.js:12:23)
+    at AdminChatsPage.useEffect (file://C:/Users/mj985/Desktop/2025프로젝트/carrot/admin/.next/dev/static/chunks/src_08krhwc._.js:94:156)
+ GET /reports 200 in 328ms (next.js: 304ms, application-code: 25ms)
+ GET /products 200 in 28ms (next.js: 9ms, application-code: 19ms)
+ GET /users 200 in 335ms (next.js: 317ms, application-code: 19ms)
+ GET /dashboard 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /login 200 in 22ms (next.js: 4ms, application-code: 18ms)
+^C

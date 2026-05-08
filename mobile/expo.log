@@ -1,0 +1,135 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL EXPO_PUBLIC_SUPABASE_URL EXPO_PUBLIC_SUPABASE_ANON_KEY
+Starting project at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  react-dom@19.2.6 - expected version: 19.1.0
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundling failed 774ms index.ts (1 module)
+ ERROR  Error: [BABEL] C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\index.ts: Cannot find module 'react-native-worklets/plugin'
+Require stack:
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\react-native-reanimated\plugin\index.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\babel-preset-expo\build\index.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\internal\babel-preset.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\loadBabelConfig.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\babel-transformer.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transform-worker\metro-transform-worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transform-worker\transform-worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\metro\src\DeltaBundler\Worker.flow.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\metro\src\DeltaBundler\Worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\jest-worker\build\workers\processChild.js (While processing: "base$0")
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\react-native-reanimated\plugin\index.js:2:16)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at babelPresetExpo (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\babel-preset-expo\build\index.js:291:62)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:30:25)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:182:19)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:210:24
+    at Generator.next (<anonymous>)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:180:21
+    at Generator.next (<anonymous>)
+    at Function.<anonymous> (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:21:3)
+    at Generator.next (<anonymous>)
+    at evaluateSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:251:28)
+    at Function.sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:89:14)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:61:25)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:182:19)
+    at onFirstPause (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:210:24)
+    at Generator.next (<anonymous>)
+    at cachedFunction (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\caching.js:52:46)
+    at cachedFunction.next (<anonymous>)
+    at loadPresetDescriptor (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:292:43)
+    at loadPresetDescriptor.next (<anonymous>)
+    at recursePresetDescriptors (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:77:31)
+    at recursePresetDescriptors.next (<anonymous>)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:156:21
+    at Generator.next (<anonymous>)
+    at loadFullConfig (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:113:5)
+    at loadFullConfig.next (<anonymous>)
+    at transform (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\transform.js:20:44)
+    at transform.next (<anonymous>)
+    at evaluateSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:251:28)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:89:14)
+    at stopHiding - secret - don't use this - v1 (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\errors\rewrite-stack-trace.js:47:12)
+    at Object.transformSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\transform.js:40:76)
+    at parseWithBabel (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transformSync.js:75:18)
+    at transformSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transformSync.js:54:16)
+    at Object.transform (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\babel-transformer.js:127:58)
+Web .\index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundling failed 19ms index.ts (1 module)
+ ERROR  Error: [BABEL] C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\index.ts: Cannot find module 'react-native-worklets/plugin'
+Require stack:
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\react-native-reanimated\plugin\index.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\babel-preset-expo\build\index.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\internal\babel-preset.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\loadBabelConfig.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\babel-transformer.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transform-worker\metro-transform-worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transform-worker\transform-worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\metro\src\DeltaBundler\Worker.flow.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\metro\src\DeltaBundler\Worker.js
+- C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\jest-worker\build\workers\processChild.js (While processing: "base$0")
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\react-native-reanimated\plugin\index.js:2:16)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at babelPresetExpo (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\babel-preset-expo\build\index.js:291:62)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:30:25)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:182:19)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:210:24
+    at Generator.next (<anonymous>)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:180:21
+    at Generator.next (<anonymous>)
+    at Function.<anonymous> (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:21:3)
+    at Generator.next (<anonymous>)
+    at evaluateSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:251:28)
+    at Function.sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:89:14)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\gensync-utils\async.js:61:25)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:182:19)
+    at onFirstPause (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:210:24)
+    at Generator.next (<anonymous>)
+    at cachedFunction (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\caching.js:52:46)
+    at cachedFunction.next (<anonymous>)
+    at loadPresetDescriptor (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:292:43)
+    at loadPresetDescriptor.next (<anonymous>)
+    at recursePresetDescriptors (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:77:31)
+    at recursePresetDescriptors.next (<anonymous>)
+    at C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:156:21
+    at Generator.next (<anonymous>)
+    at loadFullConfig (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\config\full.js:113:5)
+    at loadFullConfig.next (<anonymous>)
+    at transform (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\transform.js:20:44)
+    at transform.next (<anonymous>)
+    at evaluateSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:251:28)
+    at sync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\gensync\index.js:89:14)
+    at stopHiding - secret - don't use this - v1 (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\errors\rewrite-stack-trace.js:47:12)
+    at Object.transformSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\@babel\core\lib\transform.js:40:76)
+    at parseWithBabel (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transformSync.js:75:18)
+    at transformSync (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\transformSync.js:54:16)
+    at Object.transform (C:\Users\mj985\Desktop\2025프로젝트\carrot\mobile\node_modules\expo\node_modules\@expo\metro-config\build\babel-transformer.js:127:58)
+^C

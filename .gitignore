@@ -1,0 +1,32 @@
+# 면접 준비 파일
+interview.md
+
+# 환경 변수
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+.expo/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
