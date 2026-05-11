@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query, UploadFile, File, status
+from fastapi import APIRouter, Depends, Query, UploadFile, File, Form, status
 from typing import Optional
 from app.core.security import get_current_user
 from app.models.product import (
@@ -40,14 +40,14 @@ def search_products(
 
 @router.post("", response_model=ProductDetail, status_code=status.HTTP_201_CREATED)
 def create_product(
-    title: str,
-    price: int,
-    location_name: str,
-    lat: float,
-    lng: float,
-    description: Optional[str] = None,
-    category_id: Optional[int] = None,
-    is_negotiable: bool = True,
+    title: str = Form(...),
+    price: int = Form(...),
+    location_name: str = Form(...),
+    lat: float = Form(...),
+    lng: float = Form(...),
+    description: Optional[str] = Form(None),
+    category_id: Optional[int] = Form(None),
+    is_negotiable: bool = Form(True),
     images: list[UploadFile] = File(default=[]),
     payload: dict = Depends(get_current_user),
 ):
