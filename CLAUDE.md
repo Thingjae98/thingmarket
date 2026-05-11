@@ -234,6 +234,8 @@ thingmarket/
 | 2026-05-07 | Phase 5 완료 — 가상 지갑 충전(Mock), 에스크로 상태머신(escrowed→completed/cancelled) |
 | 2026-05-07 | Phase 6 완료 — admin/ Next.js 별도 프로젝트: 대시보드 통계, 사용자 정지관리, 신고 처리 |
 | 2026-05-07 | Phase 7 완료 — React Native Expo 모바일 앱: 인증(로그인/회원가입), 홈(위치기반), 상품상세/등록, 채팅목록/채팅방, 관심목록, 프로필 |
+| 2026-05-11 | 골드 팔레트 리뉴얼 — Binance × Mastercard 디자인 시스템 적용 (test→main 머지) |
+| 2026-05-11 | 배포 완료 — Backend: Render(https://thingmarket-backend.onrender.com), Web: Vercel(https://thingmarket-web.vercel.app), Admin: Vercel(https://thingmarket-admin.vercel.app) |
 
 ---
 
