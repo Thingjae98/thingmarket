@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from app.api.v1.router import api_router
 from app.core.config import settings
 
@@ -8,6 +9,20 @@ app = FastAPI(
     description="띵마켓 — 위치 기반 동네 중고거래 플랫폼",
     version="0.1.0",
 )
+
+
+# CORS 미들웨어 안쪽에서 예외를 잡아 JSONResponse로 변환한다.
+# 이렇게 해야 500 에러에도 CORS 헤더가 포함된다.
+@app.middleware("http")
+async def catch_unhandled_exceptions(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as exc:
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"내부 서버 오류: {type(exc).__name__}: {str(exc)}"},
+        )
+
 
 app.add_middleware(
     CORSMiddleware,
