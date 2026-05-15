@@ -22,7 +22,20 @@ const STATUS_LABEL: Record<string, string> = {
   sold: "거래완료",
 };
 
-export default function ProductCard({ item }: { item: ProductListItem }) {
+type Variant = "list" | "grid";
+
+export default function ProductCard({
+  item,
+  variant = "list",
+}: {
+  item: ProductListItem;
+  variant?: Variant;
+}) {
+  if (variant === "grid") return <GridCard item={item} />;
+  return <ListCard item={item} />;
+}
+
+function ListCard({ item }: { item: ProductListItem }) {
   return (
     <Link
       href={`/products/${item.id}`}
@@ -71,6 +84,51 @@ export default function ProductCard({ item }: { item: ProductListItem }) {
           {item.view_count > 0 && <span>👁 {item.view_count}</span>}
         </div>
       </div>
+    </Link>
+  );
+}
+
+function GridCard({ item }: { item: ProductListItem }) {
+  return (
+    <Link
+      href={`/products/${item.id}`}
+      className="block group transition-transform hover:-translate-y-0.5"
+    >
+      {/* 정사각 썸네일 */}
+      <div
+        className="relative w-full aspect-square rounded-xl overflow-hidden mb-2"
+        style={{ backgroundColor: "var(--bg-input)" }}
+      >
+        {item.thumbnail_url ? (
+          <Image
+            src={item.thumbnail_url}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform group-hover:scale-[1.02]"
+            sizes="(max-width: 640px) 50vw, 320px"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-4xl" style={{ color: "var(--bd-input)" }}>
+            📦
+          </div>
+        )}
+        {item.status !== "selling" && (
+          <div className="absolute inset-0 bg-black/55 flex items-center justify-center">
+            <span className="text-white text-sm font-bold">{STATUS_LABEL[item.status]}</span>
+          </div>
+        )}
+      </div>
+
+      <p className="text-sm truncate" style={{ color: "var(--tx-primary)" }}>{item.title}</p>
+      <p className="text-sm font-bold mt-0.5" style={{ color: "var(--tx-primary)" }}>
+        {formatPrice(item.price)}
+      </p>
+      <p className="text-[11px] mt-0.5" style={{ color: "var(--tx-secondary)" }}>
+        {item.location_name ?? "위치 미설정"}
+        {item.distance_km != null && <> · {item.distance_km}km</>}
+        {" · "}
+        {timeAgo(item.created_at)}
+      </p>
     </Link>
   );
 }
