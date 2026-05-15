@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback, Suspense } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import type { ProductListItem } from "@/types";
@@ -78,20 +77,6 @@ function MarketInner() {
 
   return (
     <div>
-      {/* 페이지 헤더 */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-lg font-bold" style={{ color: "var(--tx-primary)" }}>
-          🪙 동네 금 거래
-        </h1>
-        <Link
-          href="/"
-          className="text-xs transition-opacity hover:opacity-70"
-          style={{ color: "var(--tx-secondary)" }}
-        >
-          ← 시세 보기
-        </Link>
-      </div>
-
       {/* 검색바 */}
       <div className="flex gap-2 mb-4">
         <input
@@ -117,8 +102,7 @@ function MarketInner() {
         <button
           onClick={handleLocate}
           disabled={locating}
-          className="flex items-center gap-1 transition-colors"
-          style={{ color: "var(--accent)" }}
+          className="flex items-center gap-1 text-orange-500 hover:text-orange-600 transition-colors"
         >
           📍 {locating ? "위치 찾는 중..." : locationName}
         </button>
