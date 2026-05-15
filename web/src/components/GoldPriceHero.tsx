@@ -3,16 +3,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Range = "10d" | "1m" | "3m" | "1y";
+
 type GoldPrice = {
   generatedAt: string;
   stale: boolean;
+  range: Range;
+  trendSource: "real" | "mock";
   spot: { usdPerOz: number; usdKrw: number; krwPerGram: number; krwPerDon: number };
   gold24k: {
     threeNine: { buy: number; buyVat: number; sell: number };
     fourNine: { buy: number; buyVat: number; sell: number };
   };
-  trend14d: number[];
+  trend: number[];
 };
+
+const RANGES: { key: Range; label: string }[] = [
+  { key: "1y", label: "1년" },
+  { key: "3m", label: "3개월" },
+  { key: "1m", label: "1개월" },
+  { key: "10d", label: "10일" },
+];
 
 const formatKRW = (n: number) => n.toLocaleString("ko-KR") + "원";
 
@@ -100,6 +111,7 @@ function SkeletonChart() {
 
 export default function GoldPriceHero() {
   const router = useRouter();
+  const [range, setRange] = useState<Range>("1m");
   const [data, setData] = useState<GoldPrice | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -108,12 +120,12 @@ export default function GoldPriceHero() {
   const [flash, setFlash] = useState(false); // 값 갱신 시 잠깐 하이라이트
   const prevDonRef = useRef<number | null>(null);
 
-  const load = useCallback(async (initial: boolean) => {
+  const load = useCallback(async (initial: boolean, r: Range) => {
     if (initial) setLoading(true);
     else setRefreshing(true);
     setError(false);
     try {
-      const res = await fetch("/api/gold-price", { cache: "no-store" });
+      const res = await fetch(`/api/gold-price?range=${r}`, { cache: "no-store" });
       if (!res.ok) throw new Error("bad status");
       const json: GoldPrice = await res.json();
       // 이전값과 다르면 flash
@@ -127,14 +139,15 @@ export default function GoldPriceHero() {
       setError(true);
     } finally {
       setLoading(false);
-      // 회전 애니메이션이 깜빡이지 않게 최소 600ms 보장
       setTimeout(() => setRefreshing(false), 600);
     }
   }, []);
 
+  // 최초 로드 + range 변경 시 재요청
   useEffect(() => {
-    load(true);
-  }, [load]);
+    load(data === null, range);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [range]);
 
   // 상대시간 1초마다 갱신
   useEffect(() => {
@@ -173,7 +186,7 @@ export default function GoldPriceHero() {
           )}
         </div>
         <button
-          onClick={() => load(false)}
+          onClick={() => load(false, range)}
           disabled={loading || refreshing}
           className="flex items-center gap-1.5 text-[11px] transition-opacity disabled:opacity-60"
           style={{ color: "var(--tx-secondary)" }}
@@ -192,9 +205,32 @@ export default function GoldPriceHero() {
         </button>
       </div>
 
+      {/* 범위 토글 — 1년 / 3개월 / 1개월 / 10일 */}
+      <div className="px-4 pb-2 flex gap-1">
+        {RANGES.map((r) => {
+          const active = range === r.key;
+          return (
+            <button
+              key={r.key}
+              onClick={() => setRange(r.key)}
+              disabled={loading || refreshing}
+              className="flex-1 py-1.5 rounded-full text-[11px] font-semibold transition-colors disabled:opacity-60"
+              style={
+                active
+                  ? { backgroundColor: "var(--accent)", color: "var(--accent-fg)" }
+                  : { backgroundColor: "var(--bg-input)", color: "var(--tx-secondary)" }
+              }
+              aria-pressed={active}
+            >
+              {r.label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* 차트 */}
       <div className="px-3 pb-1">
-        {loading ? <SkeletonChart /> : data ? <MiniChart data={data.trend14d} /> : <SkeletonChart />}
+        {loading ? <SkeletonChart /> : data ? <MiniChart data={data.trend} /> : <SkeletonChart />}
       </div>
 
       {/* 현재가 큰글씨 */}
