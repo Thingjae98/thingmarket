@@ -3,8 +3,8 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "골드마켓 - 동네 금 거래",
-  description: "우리 동네 금(GOLD) 직거래 플랫폼",
+  title: "띵마켓 - 동네 금 거래",
+  description: "실시간 시세 기반 동네 금(GOLD) 직거래 플랫폼",
   icons: { icon: "/logo.svg" },
 };
 

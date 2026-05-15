@@ -27,9 +27,9 @@ export default function Navbar() {
     >
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-1.5">
-          <Image src="/logo.svg" alt="GoldMarket" width={28} height={28} priority />
+          <Image src="/logo.svg" alt="띵마켓" width={28} height={28} priority />
           <span className="text-lg font-bold tracking-tight" style={{ color: "var(--accent)" }}>
-            골드마켓
+            띵마켓
           </span>
         </Link>
         <nav className="flex items-center gap-3 text-sm">

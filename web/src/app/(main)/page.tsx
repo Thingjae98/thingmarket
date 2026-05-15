@@ -1,130 +1,56 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { api } from "@/lib/api";
-import type { ProductListItem } from "@/types";
-import ProductCard from "@/components/ProductCard";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import GoldPriceHero from "@/components/GoldPriceHero";
 
-const DEFAULT_LAT = 37.5665;
-const DEFAULT_LNG = 126.978;
-
+/**
+ * 홈 — 랜딩
+ * 순서: 검색창 → 금 시세(차트·가격·CTA 통합 카드) → 안내
+ * 상품 목록은 시세 카드 안의 "금 거래 시작" 버튼을 통해 /market 으로 진입.
+ */
 export default function HomePage() {
-  const [products, setProducts] = useState<ProductListItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const [keyword, setKeyword] = useState("");
-  const [radius, setRadius] = useState(3);
-  const [lat, setLat] = useState(DEFAULT_LAT);
-  const [lng, setLng] = useState(DEFAULT_LNG);
-  const [locationName, setLocationName] = useState("서울 중구");
-  const [locating, setLocating] = useState(false);
 
-  const fetchProducts = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ lat: String(lat), lng: String(lng), radius: String(radius) });
-      const data = await api.get<ProductListItem[]>(`/products?${params}`);
-      setProducts(data);
-    } catch {
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [lat, lng, radius]);
-
-  const fetchSearch = useCallback(async () => {
-    if (!keyword.trim()) return fetchProducts();
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ keyword: keyword.trim(), lat: String(lat), lng: String(lng), radius: String(radius) });
-      const data = await api.get<ProductListItem[]>(`/products/search?${params}`);
-      setProducts(data);
-    } catch {
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [keyword, lat, lng, radius, fetchProducts]);
-
-  useEffect(() => { fetchProducts(); }, [fetchProducts]);
-
-  const handleLocate = () => {
-    if (!navigator.geolocation) return;
-    setLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => { setLat(pos.coords.latitude); setLng(pos.coords.longitude); setLocationName("현재 위치"); setLocating(false); },
-      () => setLocating(false)
-    );
+  const submitSearch = () => {
+    const q = keyword.trim();
+    router.push(q ? `/market?q=${encodeURIComponent(q)}` : "/market");
   };
 
   return (
     <div>
-      {/* 금 시세 히어로 */}
-      <GoldPriceHero />
-
-      {/* 검색바 */}
-      <div id="products" className="flex gap-2 mb-4">
+      {/* 1) 검색창 — 최상단 */}
+      <div className="flex gap-2 mb-5">
         <input
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && fetchSearch()}
-          placeholder="금 상품 검색"
-          className="flex-1 px-4 py-2.5 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          onKeyDown={(e) => e.key === "Enter" && submitSearch()}
+          placeholder="검색어를 입력해주세요"
+          className="flex-1 px-5 py-3 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--bd-input)", color: "var(--tx-primary)" }}
         />
         <button
-          onClick={fetchSearch}
-          className="px-5 py-2.5 rounded-full text-sm font-medium transition-colors hover:opacity-80"
-          style={{ backgroundColor: "var(--accent)", color: "var(--accent-fg)" }}
+          onClick={submitSearch}
+          aria-label="검색"
+          className="w-12 h-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-80"
+          style={{ backgroundColor: "var(--tx-primary)", color: "var(--bg-card)" }}
         >
-          검색
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
         </button>
       </div>
 
-      {/* 위치 + 반경 */}
-      <div className="flex items-center gap-2 mb-4 text-sm flex-wrap">
-        <button
-          onClick={handleLocate}
-          disabled={locating}
-          className="flex items-center gap-1 text-orange-500 hover:text-orange-600 transition-colors"
-        >
-          📍 {locating ? "위치 찾는 중..." : locationName}
-        </button>
-        <span style={{ color: "var(--bd-input)" }}>|</span>
-        {[1, 3, 5].map((r) => (
-          <button
-            key={r}
-            onClick={() => setRadius(r)}
-            className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
-            style={radius === r
-              ? { backgroundColor: "var(--accent)", color: "var(--accent-fg)" }
-              : { color: "var(--tx-secondary)" }
-            }
-          >
-            {r}km
-          </button>
-        ))}
-      </div>
+      {/* 2) 금 시세 히어로 (차트 + 가격표 + 금 거래 시작 CTA) */}
+      <GoldPriceHero />
 
-      {/* 상품 목록 */}
-      {loading ? (
-        <div className="text-center py-16" style={{ color: "var(--tx-secondary)" }}>불러오는 중...</div>
-      ) : products.length === 0 ? (
-        <div className="text-center py-16" style={{ color: "var(--tx-secondary)" }}>
-          <p className="text-4xl mb-3">🪙</p>
-          <p className="text-sm">근처에 등록된 금 상품이 없습니다.</p>
-        </div>
-      ) : (
-        <div
-          className="rounded-2xl overflow-hidden shadow-sm"
-          style={{ backgroundColor: "var(--bg-card)" }}
-        >
-          {products.map((p) => (
-            <ProductCard key={p.id} item={p} />
-          ))}
-        </div>
-      )}
+      {/* 3) 안내 카피 */}
+      <p className="text-center text-xs mt-2 mb-1" style={{ color: "var(--tx-secondary)" }}>
+        실시간 시세 기반 동네 금 직거래 플랫폼
+      </p>
     </div>
   );
 }
