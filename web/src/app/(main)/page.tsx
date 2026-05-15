@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import GoldPriceHero from "@/components/GoldPriceHero";
+import RotatingKeyword from "@/components/RotatingKeyword";
+import PopularKeywords from "@/components/PopularKeywords";
 
 /**
  * 홈 — 랜딩
- * 순서: 검색창 → 금 시세(차트·가격·CTA 통합 카드) → 안내
- * 상품 목록은 시세 카드 안의 "금 거래 시작" 버튼을 통해 /market 으로 진입.
+ * 순서: 루프 헤드라인 → 좁은 검색창 → 인기 검색어 → 금 시세(차트·CTA)
+ * "금 거래 시작" 클릭 시 /market 으로 이동.
  */
 export default function HomePage() {
   const router = useRouter();
@@ -20,8 +22,17 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* 1) 검색창 — 최상단 */}
-      <div className="flex gap-2 mb-5">
+      {/* 1) 헤드라인 — 단어 부분만 골드 컬러로 루프 */}
+      <h1
+        className="text-center font-bold mt-10 sm:mt-14 mb-6 text-[1.05rem] sm:text-xl"
+        style={{ color: "var(--tx-primary)" }}
+      >
+        <span className="inline-block mr-1" aria-hidden>📍</span>
+        띵마켓에서 <RotatingKeyword /> 찾고 계신가요?
+      </h1>
+
+      {/* 2) 검색바 — 좁은 폭, 중앙 정렬 */}
+      <div className="flex gap-2 mb-3 max-w-md mx-auto">
         <input
           type="text"
           value={keyword}
@@ -34,7 +45,7 @@ export default function HomePage() {
         <button
           onClick={submitSearch}
           aria-label="검색"
-          className="w-12 h-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-80"
+          className="w-12 h-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-80 shrink-0"
           style={{ backgroundColor: "var(--tx-primary)", color: "var(--bg-card)" }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -44,10 +55,14 @@ export default function HomePage() {
         </button>
       </div>
 
-      {/* 2) 금 시세 히어로 (차트 + 가격표 + 금 거래 시작 CTA) */}
+      {/* 3) 인기 검색어 */}
+      <div className="mb-8">
+        <PopularKeywords align="center" />
+      </div>
+
+      {/* 4) 금 시세 히어로 */}
       <GoldPriceHero />
 
-      {/* 3) 안내 카피 */}
       <p className="text-center text-xs mt-2 mb-1" style={{ color: "var(--tx-secondary)" }}>
         실시간 시세 기반 동네 금 직거래 플랫폼
       </p>

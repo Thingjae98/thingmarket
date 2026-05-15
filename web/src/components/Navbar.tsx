@@ -7,7 +7,7 @@ import { useAuthStore } from "@/store/auth";
 import { useThemeStore } from "@/store/theme";
 import { createClient } from "@/lib/supabase";
 
-export default function Navbar() {
+export default function Navbar({ maxWidth = "max-w-2xl" }: { maxWidth?: "max-w-2xl" | "max-w-6xl" }) {
   const { user, clear } = useAuthStore();
   const { theme, toggle } = useThemeStore();
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function Navbar() {
       className="sticky top-0 z-50 shadow-sm"
       style={{ backgroundColor: "var(--bg-card)", borderBottom: "1px solid var(--bd-input)" }}
     >
-      <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div className={`${maxWidth} mx-auto px-4 h-14 flex items-center justify-between`}>
         <Link href="/" className="flex items-center gap-1.5">
           <Image src="/logo.svg" alt="띵마켓" width={28} height={28} priority />
           <span className="text-lg font-bold tracking-tight" style={{ color: "var(--accent)" }}>
