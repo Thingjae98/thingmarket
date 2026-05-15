@@ -3,8 +3,9 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "띵마켓 - 동네 중고거래",
-  description: "우리 동네 중고 직거래 플랫폼",
+  title: "골드마켓 - 동네 금 거래",
+  description: "우리 동네 금(GOLD) 직거래 플랫폼",
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({

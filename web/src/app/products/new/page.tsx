@@ -88,7 +88,7 @@ export default function NewProductPage() {
 
   return (
     <div className="pb-8">
-      <h1 className="text-lg font-bold mb-5" style={{ color: "var(--tx-primary)" }}>내 물건 팔기</h1>
+      <h1 className="text-lg font-bold mb-5" style={{ color: "var(--tx-primary)" }}>내 금 등록하기</h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (

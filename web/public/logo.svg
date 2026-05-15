@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4D03F"/>
+      <stop offset="50%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8E08E"/>
+      <stop offset="100%" stop-color="#C9920C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 외곽 골드 크레센트 -->
+  <path d="M 50 12
+           A 38 38 0 1 1 12 50
+           A 35 35 0 1 0 50 15"
+        fill="url(#goldGrad)" />
+
+  <!-- G 형태 글자 (오른쪽 트임) -->
+  <path d="M 70 50
+           L 70 64
+           L 60 64"
+        stroke="url(#goldGrad)" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- 골드바 3개 (피라미드 적층) -->
+  <!-- 위쪽 바 -->
+  <polygon points="42,48 58,48 60,55 40,55" fill="url(#barGrad)" stroke="#8B6914" stroke-width="0.5"/>
+  <!-- 아래 왼쪽 바 -->
+  <polygon points="32,57 48,57 50,64 30,64" fill="url(#barGrad)" stroke="#8B6914" stroke-width="0.5"/>
+  <!-- 아래 오른쪽 바 -->
+  <polygon points="52,57 68,57 70,64 50,64" fill="url(#barGrad)" stroke="#8B6914" stroke-width="0.5"/>
+</svg>

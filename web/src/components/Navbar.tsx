@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
@@ -25,14 +26,17 @@ export default function Navbar() {
       style={{ backgroundColor: "var(--bg-card)", borderBottom: "1px solid var(--bd-input)" }}
     >
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold" style={{ color: "var(--accent)" }}>
-          띵마켓
+        <Link href="/" className="flex items-center gap-1.5">
+          <Image src="/logo.svg" alt="GoldMarket" width={28} height={28} priority />
+          <span className="text-lg font-bold tracking-tight" style={{ color: "var(--accent)" }}>
+            골드마켓
+          </span>
         </Link>
         <nav className="flex items-center gap-3 text-sm">
           {user ? (
             <>
               <Link href="/products/new" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
-                판매하기
+                금 등록
               </Link>
               <Link href="/chat" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 채팅

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { api } from "@/lib/api";
 import type { ProductListItem } from "@/types";
 import ProductCard from "@/components/ProductCard";
+import GoldPriceHero from "@/components/GoldPriceHero";
 
 const DEFAULT_LAT = 37.5665;
 const DEFAULT_LNG = 126.978;
@@ -58,14 +59,17 @@ export default function HomePage() {
 
   return (
     <div>
+      {/* 금 시세 히어로 */}
+      <GoldPriceHero />
+
       {/* 검색바 */}
-      <div className="flex gap-2 mb-4">
+      <div id="products" className="flex gap-2 mb-4">
         <input
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && fetchSearch()}
-          placeholder="상품명 검색"
+          placeholder="금 상품 검색"
           className="flex-1 px-4 py-2.5 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--bd-input)", color: "var(--tx-primary)" }}
         />
@@ -108,8 +112,8 @@ export default function HomePage() {
         <div className="text-center py-16" style={{ color: "var(--tx-secondary)" }}>불러오는 중...</div>
       ) : products.length === 0 ? (
         <div className="text-center py-16" style={{ color: "var(--tx-secondary)" }}>
-          <p className="text-4xl mb-3">📭</p>
-          <p className="text-sm">근처에 등록된 상품이 없습니다.</p>
+          <p className="text-4xl mb-3">🪙</p>
+          <p className="text-sm">근처에 등록된 금 상품이 없습니다.</p>
         </div>
       ) : (
         <div
