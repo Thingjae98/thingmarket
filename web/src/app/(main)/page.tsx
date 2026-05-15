@@ -1,19 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import GoldPriceHero from "@/components/GoldPriceHero";
 import RotatingKeyword from "@/components/RotatingKeyword";
 import PopularKeywords from "@/components/PopularKeywords";
+import { useLocationStore } from "@/store/location";
 
 /**
  * 홈 — 랜딩
  * 순서: 루프 헤드라인 → 좁은 검색창 → 인기 검색어 → 금 시세(차트·CTA)
  * "금 거래 시작" 클릭 시 /market 으로 이동.
+ * 마운트 시 위치 권한 자동 요청 (1회).
  */
 export default function HomePage() {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
+  const requestGeo = useLocationStore((s) => s.requestGeo);
+
+  useEffect(() => {
+    requestGeo();
+  }, [requestGeo]);
 
   const submitSearch = () => {
     const q = keyword.trim();
