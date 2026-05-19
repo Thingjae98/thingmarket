@@ -35,16 +35,16 @@ export default function Navbar({ maxWidth = "max-w-2xl" }: { maxWidth?: "max-w-2
         <nav className="flex items-center gap-3 text-sm">
           {user ? (
             <>
-              <Link href="/products/new" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/products/new" className="transition-opacity hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 금 등록
               </Link>
-              <Link href="/chat" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/chat" className="transition-opacity hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 채팅
               </Link>
-              <Link href="/likes" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/likes" className="transition-opacity hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 관심목록
               </Link>
-              <Link href="/profile" className="transition-colors hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
+              <Link href="/profile" className="transition-opacity hover:opacity-70" style={{ color: "var(--tx-secondary)" }}>
                 내 프로필
               </Link>
               <button
@@ -59,14 +59,14 @@ export default function Navbar({ maxWidth = "max-w-2xl" }: { maxWidth?: "max-w-2
             <>
               <Link
                 href="/login"
-                className="px-3 py-1.5 rounded-full text-sm transition-colors hover:opacity-80"
+                className="px-3 py-1.5 rounded-full text-sm transition-opacity hover:opacity-80"
                 style={{ border: "1px solid var(--accent)", color: "var(--accent)" }}
               >
                 로그인
               </Link>
               <Link
                 href="/register"
-                className="px-3 py-1.5 rounded-full text-sm transition-colors hover:opacity-80"
+                className="px-3 py-1.5 rounded-full text-sm transition-opacity hover:opacity-80"
                 style={{ backgroundColor: "var(--accent)", color: "var(--accent-fg)" }}
               >
                 회원가입

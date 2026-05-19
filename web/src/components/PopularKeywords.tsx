@@ -26,7 +26,7 @@ export default function PopularKeywords({
         <button
           key={k}
           onClick={() => router.push(`/market?q=${encodeURIComponent(k)}`)}
-          className="transition-opacity hover:opacity-70"
+          className="transition-opacity hover:opacity-70 min-h-[44px] px-1 flex items-center"
           style={{ color: "var(--tx-primary)" }}
         >
           {k}

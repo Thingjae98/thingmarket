@@ -12,9 +12,9 @@
   --tx-primary:  #1A1208;
   --tx-secondary:#6B5F4A;
 
-  /* 골드 액센트 (프리미엄 금 거래 — Binance Yellow 저채도 버전) */
-  --accent:      #C9920C;
-  --accent-hover:#A87B0A;
+  /* 골드 액센트 — WCAG AA 4.5:1 충족 (#8B6408 on white = 5.33:1) */
+  --accent:      #8B6408;
+  --accent-hover:#6A4D06;
   --accent-fg:   #FFFFFF;
   --accent-soft: #FDF3DB;
 }
@@ -32,6 +32,17 @@
   --accent-hover:#E5B420;
   --accent-fg:   #1A1208;
   --accent-soft: #2A2410;
+}
+
+/* ─── 공통 애니메이션 (styled-jsx 대신 전역 정의) ─── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes kwSlideIn {
+  0%   { opacity: 0; transform: translateY(14px); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── Base ─── */

@@ -99,12 +99,6 @@ function SkeletonChart() {
           backgroundSize: "200% 100%",
         }}
       />
-      <style jsx>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}</style>
     </div>
   );
 }

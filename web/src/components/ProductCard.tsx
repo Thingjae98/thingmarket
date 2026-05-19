@@ -49,7 +49,7 @@ function ListCard({ item }: { item: ProductListItem }) {
         {item.thumbnail_url ? (
           <Image
             src={item.thumbnail_url}
-            alt={item.title}
+            alt=""
             fill
             className="object-cover"
             sizes="96px"
@@ -102,7 +102,7 @@ function GridCard({ item }: { item: ProductListItem }) {
         {item.thumbnail_url ? (
           <Image
             src={item.thumbnail_url}
-            alt={item.title}
+            alt=""
             fill
             className="object-cover transition-transform group-hover:scale-[1.02]"
             sizes="(max-width: 640px) 50vw, 320px"

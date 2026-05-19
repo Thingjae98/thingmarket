@@ -33,13 +33,6 @@ export default function RotatingKeyword() {
         {KEYWORDS[idx]}
       </span>
 
-      <style jsx>{`
-        @keyframes kwSlideIn {
-          0% { opacity: 0; transform: translateY(14px); }
-          60% { opacity: 1; }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </span>
   );
 }
