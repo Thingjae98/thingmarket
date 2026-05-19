@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query, UploadFile, File, Form, status
 from typing import Optional
-from app.core.security import get_current_user
+from app.core.security import get_current_user, get_optional_user
 from app.models.product import (
     ProductCreate, ProductUpdate, ProductStatusUpdate,
     ProductDetail, ProductListItem,
@@ -68,10 +68,11 @@ def create_product(
 @router.get("/{product_id}", response_model=ProductDetail)
 def get_product(
     product_id: str,
-    payload: Optional[dict] = Depends(lambda: None),
+    payload: Optional[dict] = Depends(get_optional_user),
 ):
     """상품 상세 조회. 조회 시 view_count 자동 증가."""
-    return product_service.get_product(product_id)
+    viewer_id = payload["sub"] if payload else None
+    return product_service.get_product(product_id, viewer_id)
 
 
 @router.patch("/{product_id}", response_model=ProductDetail)

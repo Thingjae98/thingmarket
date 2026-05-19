@@ -1,7 +1,13 @@
 from fastapi import APIRouter, Depends, Query
-from typing import Optional
+from typing import Optional, Literal
+from pydantic import BaseModel
 from app.core.security import require_admin
 from app.core.database import supabase_admin
+
+
+class ReportUpdate(BaseModel):
+    status: Optional[Literal["pending", "reviewed", "resolved", "dismissed"]] = None
+    admin_note: Optional[str] = None
 
 router = APIRouter()
 
@@ -146,15 +152,12 @@ def get_chat_messages_admin(
 @router.patch("/reports/{report_id}")
 def update_report(
     report_id: str,
-    body: dict,
+    body: ReportUpdate,
     payload: dict = Depends(require_admin),
 ):
     """신고 상태 변경 + 어드민 메모."""
-    update_data = {}
-    if "status" in body:
-        update_data["status"] = body["status"]
-    if "admin_note" in body:
-        update_data["admin_note"] = body["admin_note"]
-
+    update_data = body.model_dump(exclude_none=True)
+    if not update_data:
+        return {}
     result = supabase_admin.table("reports").update(update_data).eq("id", report_id).execute()
     return result.data[0] if result.data else {}

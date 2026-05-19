@@ -6,6 +6,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from app.core.config import settings
 
 bearer_scheme = HTTPBearer()
+bearer_scheme_optional = HTTPBearer(auto_error=False)
 
 # JWKS 인메모리 캐시 (1시간 TTL)
 # Supabase가 ECC P-256 키로 전환되어 HS256 시크릿 대신 JWKS 공개키로 검증한다.
@@ -61,7 +62,7 @@ def get_current_user(
             )
         return payload
 
-    except (JWTError, Exception):
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="유효하지 않은 토큰입니다",
@@ -91,9 +92,20 @@ def verify_token(token: str) -> dict | None:
         return None
 
 
+def get_optional_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme_optional),
+) -> dict | None:
+    """토큰이 없으면 None, 있으면 페이로드 반환. 비로그인 허용 엔드포인트에 사용."""
+    if credentials is None:
+        return None
+    return verify_token(credentials.credentials)
+
+
 def require_admin(payload: dict = Depends(get_current_user)) -> dict:
-    """role이 admin인 사용자만 통과시킨다."""
-    role = (payload.get("user_metadata") or {}).get("role")
+    """role이 admin인 사용자만 통과시킨다.
+    app_metadata는 서버 전용(서비스 롤만 수정 가능)이므로
+    user_metadata 대신 app_metadata에서 role을 읽어야 한다."""
+    role = (payload.get("app_metadata") or {}).get("role")
     if role != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

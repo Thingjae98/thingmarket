@@ -20,7 +20,7 @@ async def catch_unhandled_exceptions(request: Request, call_next):
     except Exception as exc:
         return JSONResponse(
             status_code=500,
-            content={"detail": f"내부 서버 오류: {type(exc).__name__}: {str(exc)}"},
+            content={"detail": "내부 서버 오류가 발생했습니다"},
         )
 
 

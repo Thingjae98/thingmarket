@@ -113,10 +113,10 @@ def create_product(
     }
     try:
         result = supabase_admin.table("products").insert(insert_data).execute()
-    except Exception as exc:
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"상품 DB 저장 실패: {exc}",
+            detail="상품 등록에 실패했습니다",
         )
 
     if not result.data:
@@ -133,20 +133,20 @@ def create_product(
                 "p_location_name": data.location_name,
             },
         ).execute()
-    except Exception as exc:
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"위치 정보 설정 실패: {exc}",
+            detail="위치 정보 설정에 실패했습니다",
         )
 
     # 이미지 업로드 (Supabase Storage → URL 저장)
     if image_files:
         try:
             _upload_images(product_id, image_files)
-        except Exception as exc:
+        except Exception:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"이미지 업로드 실패: {exc}",
+                detail="이미지 업로드에 실패했습니다",
             )
 
     return get_product(product_id, seller_id)
