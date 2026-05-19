@@ -3,9 +3,17 @@ from app.core.database import supabase_admin
 from app.models.chat import ChatRoomCreate, ChatMessageCreate
 import uuid
 
+# 채팅방 조회 시 공통으로 사용하는 SELECT 절.
+# 단일 JOIN 쿼리로 product·buyer·seller 정보를 한 번에 가져온다.
+_ROOM_SELECT = (
+    "*, "
+    "products(title, product_images(image_url, display_order)), "
+    "buyer:profiles!chat_rooms_buyer_id_fkey(nickname), "
+    "seller:profiles!chat_rooms_seller_id_fkey(nickname)"
+)
+
 
 def get_or_create_room(buyer_id: str, data: ChatRoomCreate) -> dict:
-    # 상품 존재 + 판매자 확인
     product = (
         supabase_admin.table("products")
         .select("id, seller_id, title")
@@ -20,54 +28,59 @@ def get_or_create_room(buyer_id: str, data: ChatRoomCreate) -> dict:
     if seller_id == buyer_id:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="본인 상품에는 채팅할 수 없습니다")
 
-    # 기존 채팅방 조회
     existing = (
         supabase_admin.table("chat_rooms")
-        .select("*")
+        .select(_ROOM_SELECT)
         .eq("product_id", data.product_id)
         .eq("buyer_id", buyer_id)
         .maybe_single()
         .execute()
     )
     if existing.data:
-        return _enrich_room(existing.data, buyer_id)
+        return _flatten_room(existing.data, buyer_id)
 
-    # 신규 생성
     room_id = str(uuid.uuid4())
-    result = supabase_admin.table("chat_rooms").insert({
+    supabase_admin.table("chat_rooms").insert({
         "id": room_id,
         "product_id": data.product_id,
         "buyer_id": buyer_id,
         "seller_id": seller_id,
     }).execute()
 
-    return _enrich_room(result.data[0], buyer_id)
+    result = (
+        supabase_admin.table("chat_rooms")
+        .select(_ROOM_SELECT)
+        .eq("id", room_id)
+        .maybe_single()
+        .execute()
+    )
+    return _flatten_room(result.data, buyer_id)
 
 
 def list_rooms(user_id: str) -> list[dict]:
     result = (
         supabase_admin.table("chat_rooms")
-        .select("*")
+        .select(_ROOM_SELECT)
         .or_(f"buyer_id.eq.{user_id},seller_id.eq.{user_id}")
         .order("last_message_at", desc=True)
         .execute()
     )
-    return [_enrich_room(r, user_id) for r in result.data or []]
+    return [_flatten_room(r, user_id) for r in result.data or []]
 
 
 def get_room(room_id: str, user_id: str) -> dict:
-    room = (
+    result = (
         supabase_admin.table("chat_rooms")
-        .select("*")
+        .select(_ROOM_SELECT)
         .eq("id", room_id)
         .maybe_single()
         .execute()
     )
-    if not room.data:
+    if not result.data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="채팅방을 찾을 수 없습니다")
-    if user_id not in (room.data["buyer_id"], room.data["seller_id"]):
+    if user_id not in (result.data["buyer_id"], result.data["seller_id"]):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="권한이 없습니다")
-    return _enrich_room(room.data, user_id)
+    return _flatten_room(result.data, user_id)
 
 
 def get_messages(room_id: str, user_id: str, limit: int = 50, before: str | None = None) -> list[dict]:
@@ -94,10 +107,8 @@ def get_messages(room_id: str, user_id: str, limit: int = 50, before: str | None
 
 def mark_read(room_id: str, user_id: str) -> None:
     room = _assert_member(room_id, user_id)
-    if room["buyer_id"] == user_id:
-        supabase_admin.table("chat_rooms").update({"buyer_unread": 0}).eq("id", room_id).execute()
-    else:
-        supabase_admin.table("chat_rooms").update({"seller_unread": 0}).eq("id", room_id).execute()
+    field = "buyer_unread" if room["buyer_id"] == user_id else "seller_unread"
+    supabase_admin.table("chat_rooms").update({field: 0}).eq("id", room_id).execute()
 
 
 def save_message(room_id: str, sender_id: str, data: ChatMessageCreate) -> dict:
@@ -114,16 +125,15 @@ def save_message(room_id: str, sender_id: str, data: ChatMessageCreate) -> dict:
 
     msg = result.data[0]
 
-    # last_message + unread 카운트 업데이트
     is_buyer = room["buyer_id"] == sender_id
+    counter_field = "seller_unread" if is_buyer else "buyer_unread"
+    current_count = room["seller_unread"] if is_buyer else room["buyer_unread"]
     supabase_admin.table("chat_rooms").update({
         "last_message": data.content,
         "last_message_at": msg["created_at"],
-        "buyer_unread" if not is_buyer else "seller_unread":
-            (room["buyer_unread"] if not is_buyer else room["seller_unread"]) + 1,
+        counter_field: current_count + 1,
     }).eq("id", room_id).execute()
 
-    # 보낸 사람 닉네임 조회
     profile = (
         supabase_admin.table("profiles")
         .select("nickname")
@@ -152,29 +162,16 @@ def _assert_member(room_id: str, user_id: str) -> dict:
     return room.data
 
 
-def _enrich_room(room: dict, viewer_id: str) -> dict:
-    product = (
-        supabase_admin.table("products")
-        .select("title, product_images(image_url, display_order)")
-        .eq("id", room["product_id"])
-        .maybe_single()
-        .execute()
-    )
-    if product.data:
-        room["product_title"] = product.data["title"]
-        imgs = sorted(product.data.get("product_images", []) or [], key=lambda x: x.get("display_order", 0))
-        room["product_thumbnail"] = imgs[0]["image_url"] if imgs else None
-    else:
-        room["product_title"] = None
-        room["product_thumbnail"] = None
+def _flatten_room(room: dict, viewer_id: str) -> dict:
+    """JOIN으로 가져온 중첩 데이터를 평탄화한다. DB 호출 없음."""
+    product = room.pop("products", {}) or {}
+    buyer_info = room.pop("buyer", {}) or {}
+    seller_info = room.pop("seller", {}) or {}
 
-    other_id = room["seller_id"] if room["buyer_id"] == viewer_id else room["buyer_id"]
-    other = (
-        supabase_admin.table("profiles")
-        .select("nickname")
-        .eq("id", other_id)
-        .maybe_single()
-        .execute()
-    )
-    room["other_nickname"] = other.data["nickname"] if other.data else None
+    room["product_title"] = product.get("title")
+    imgs = sorted(product.get("product_images", []) or [], key=lambda x: x.get("display_order", 0))
+    room["product_thumbnail"] = imgs[0]["image_url"] if imgs else None
+
+    other_info = seller_info if room["buyer_id"] == viewer_id else buyer_info
+    room["other_nickname"] = other_info.get("nickname")
     return room
